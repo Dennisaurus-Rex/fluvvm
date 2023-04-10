@@ -1,6 +1,8 @@
 name: fluvvm
-description: Flutter mvvm
-version: 1.0.0+1
+description: Fluvvm is a lightweight library that removes some boilerplate code from your Flutter apps that is using `provider` and the `MVVM` architecture.
+version: 1.0.1
+repository: https://github.com/Dennisaurus-Rex/fluvvm
+issue_tracker: https://github.com/Dennisaurus-Rex/fluvvm/issues
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
