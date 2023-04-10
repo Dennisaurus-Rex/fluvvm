@@ -14,6 +14,8 @@ abstract class NofifiedWidget<T extends Viewmodel> extends StatelessWidget {
     });
   }
 
+  /// Don't override this method.
+  /// Use [buildOnNotified] instead.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>(
@@ -30,5 +32,9 @@ abstract class NofifiedWidget<T extends Viewmodel> extends StatelessWidget {
     );
   }
 
+  /// This method is called when the viewmodel changes.
+  ///
+  /// Use this method to build the widget based on the State
+  /// provided by the viewmodel.
   Widget buildOnNotified(BuildContext context, T viewmodel);
 }

@@ -18,6 +18,13 @@ class NetworkRequest {
 
   Uri get _uri => Uri.https(baseUrl, path, query);
 
+  /// Fire the request.
+  ///
+  /// Returns a [Future] that completes with a [Map<String, Object?>]
+  /// if the request is successful.
+  ///
+  /// Throws a [NetworkError] if the request fails.
+  /// Rethrows any exception from [http].
   Future<Map<String, Object?>> fire({
     Object? body,
   }) async {
@@ -74,8 +81,17 @@ class NetworkRequest {
   }
 }
 
+/// HTTP methods.
+///
+/// [get] = GET
+/// [post] = POST
+/// [put] = PUT
+/// [delete] = DELETE
 enum NetworkMethod { get, post, put, delete }
 
+/// Response codes: 400 - 499 = [NetworkError.badRequest]
+/// Response codes: 500 - 599 = [NetworkError.unauthorized]
+/// Other response codes = [NetworkError.unkown]
 enum NetworkError implements Exception { badRequest, unauthorized, unkown }
 
 extension IsInRange on int {
