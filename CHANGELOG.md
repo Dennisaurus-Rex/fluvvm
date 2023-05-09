@@ -19,3 +19,7 @@ Added more documentation
 * Added a `network_request_example.dart` that shows how to use the `NetworkRequest` class.
 
 * Added more documentation to `README.md` and `NetworkRequest` class.
+
+## Version 2.0.1
+
+Updated README.md to reflect changes in version 2.0.0 that got lost in translation. 🤦

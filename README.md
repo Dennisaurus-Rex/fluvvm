@@ -38,7 +38,7 @@ class MyRepository {
 }
 ```
 
-### 2. Create a `ViewModel` with a `State` and `Intent`
+### 2. Create a `ViewModel` with a `FluvvmState` and `FluvvmIntent`
 
 ```dart
 class MyViewmodel extends Viewmodel<MyState, MyIntent> {
@@ -95,13 +95,13 @@ class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   }
 }
 
-enum MyState with State {
+enum MyState with FluvvmState {
   loading,
   content,
   error,
 }
 
-enum MyIntent with Intent {
+enum MyIntent with FluvvmIntent {
   fetchData,
   storeData,
   navigateToWidget,
