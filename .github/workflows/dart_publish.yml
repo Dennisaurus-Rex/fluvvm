@@ -8,8 +8,11 @@ on:
 
 jobs:
   publish:
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
-    with:
-      environment: pub.dev
+    steps:
+      - name: Publish
+        uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+        with:
+          environment: pub.dev
