@@ -11,3 +11,11 @@ Updated desciption in pubspec.yaml
 ## Version 1.0.2
 
 Added more documentation
+
+## Version 2.0.0 __BREAKING CHANGES__
+
+* Renamed `Intent` to `FluvvmIntent` and `State` to `FluvvmState` to mitigate name collisions with `flutter/material.dart` library.
+
+* Added a `network_request_example.dart` that shows how to use the `NetworkRequest` class.
+
+* Added more documentation to `README.md` and `NetworkRequest` class.

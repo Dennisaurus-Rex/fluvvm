@@ -57,13 +57,13 @@ class ExampleViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
   }
 }
 
-enum ExampleState with State {
+enum ExampleState with FluvvmState {
   loading,
   content,
   error,
 }
 
-enum ExampleIntent with Intent {
+enum ExampleIntent with FluvvmIntent {
   fetchData,
   storeData,
   navigateToWidget,
