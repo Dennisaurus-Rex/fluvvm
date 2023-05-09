@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Fluvvm is a lightweight library that removes some boilerplate code from your Flutter apps that is using `provider` and the `MVVM` architecture.
+Fluvvm is a lightweight library that removes some boilerplate code from your Flutter apps that is using `provider` and the `MVVM` architecture. Also includes a `NetworkRequest` class that makes it a piece of cake to make network requests.
 
 ## Why?
 
@@ -142,6 +142,81 @@ class MyWidget extends NofifiedWidget<MyViewmodel> {
       case MyState.error:
         return const Center(child: Text('Error'));
     }
+  }
+}
+```
+
+## NetworkRequest
+
+### Get
+
+```dart
+Future<Map<String, dynamic>> get(
+  String id,
+  Map<String, String>? headers,
+) async {
+  try {
+    final request = NetworkRequest(
+      baseUrl: 'https://example.com',
+      path: '/api/v1/data',
+      query: {'id': id},
+    );
+    return await request.fire(headers: headers);
+  } catch (e) {
+    rethrow;
+  }
+}
+```
+
+### Post
+
+```dart
+Future<Map<String, dynamic>> post(Object data) async {
+  try {
+    final request = NetworkRequest(
+      baseUrl: 'https://example.com',
+      path: '/api/v1/data',
+      method: NetworkMethod.post,
+    );
+    return await request.fire(body: data);
+  } catch (e) {
+    rethrow;
+  }
+}
+```
+
+### Put
+
+```dart
+Future<Map<String, dynamic>> put(Object data) async {
+  try {
+    final request = NetworkRequest(
+      baseUrl: 'https://example.com',
+      path: '/api/v1/data',
+      method: NetworkMethod.put,
+    );
+    return await request.fire(body: data);
+  } catch (e) {
+    rethrow;
+  }
+}
+```
+
+### Delete
+
+```dart
+/// Simple delete request.
+Future<Map<String, dynamic>> delete(String id, Object? data) async {
+  try {
+    final request = NetworkRequest(
+      baseUrl: 'https://example.com',
+      path: '/api/v1/data',
+      method: NetworkMethod.delete,
+      query: {'id': id},
+    );
+    return await request.fire(body: data);
+  } catch (e) {
+    rethrow;
   }
 }
 ```

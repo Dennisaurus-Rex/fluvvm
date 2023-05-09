@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-abstract class Viewmodel<S extends State, I extends Intent>
+abstract class Viewmodel<S extends FluvvmState, I extends FluvvmIntent>
     extends ChangeNotifier {
   bool get isBound => _isBound;
   bool _isBound = false;
@@ -38,12 +38,12 @@ abstract class Viewmodel<S extends State, I extends Intent>
   /// This method is called by the [NofifiedWidget] to raise an intent.
   ///
   /// It is recomended to create an enum with all the intents.
-  /// enum with [Intent] {}
+  /// enum with [FluvvmIntent] {}
   ///
-  /// Example: [Viewmodel].raiseIntent([Intent].NavigateToWidget)
-  /// Example: [Viewmodel].raiseIntent([Intent].FetchData)
-  /// Example: [Viewmodel].raiseIntent([Intent].StoreData)
-  /// Example: [Viewmodel].raiseIntent([Intent].ShowDialog)
+  /// Example: [Viewmodel].raiseIntent([FluvvmIntent].NavigateToWidget)
+  /// Example: [Viewmodel].raiseIntent([FluvvmIntent].FetchData)
+  /// Example: [Viewmodel].raiseIntent([FluvvmIntent].StoreData)
+  /// Example: [Viewmodel].raiseIntent([FluvvmIntent].ShowDialog)
   void raiseIntent(I intent, {Object? data});
 
   /// Viewmodel calls this method to update the state and notify the Widget.
@@ -54,6 +54,6 @@ abstract class Viewmodel<S extends State, I extends Intent>
   }
 }
 
-mixin State {}
+mixin FluvvmState {}
 
-mixin Intent {}
+mixin FluvvmIntent {}

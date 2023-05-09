@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluvvm/fluvvm.dart' as fluvvm;
+import 'package:fluvvm/fluvvm.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyViewmodel extends fluvvm.Viewmodel<MyState, MyIntent> {
+class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   MyViewmodel();
 
   String get content => _counter.toString();
@@ -43,16 +43,16 @@ class MyViewmodel extends fluvvm.Viewmodel<MyState, MyIntent> {
   }
 }
 
-enum MyIntent with fluvvm.Intent {
+enum MyIntent with FluvvmIntent {
   increment,
 }
 
-enum MyState with fluvvm.State {
+enum MyState with FluvvmState {
   loading,
   content,
 }
 
-class MyHomePage extends fluvvm.NofifiedWidget<MyViewmodel> {
+class MyHomePage extends NofifiedWidget<MyViewmodel> {
   const MyHomePage({super.key, required super.viewmodel});
 
   @override
