@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluvvm/fluvvm.dart';
 import 'viewmodel_example.dart';
 
-class MyWidget extends NofifiedWidget<ExampleViewmodel> {
+class MyWidget extends NotifiedWidget<ExampleViewmodel> {
   const MyWidget({super.key, required super.viewmodel});
 
   @override

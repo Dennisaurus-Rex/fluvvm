@@ -4,8 +4,8 @@ import 'package:fluvvm/src/viewmodel.dart';
 import 'package:provider/provider.dart';
 
 /// A widget that is notified when the viewmodel changes.
-abstract class NofifiedWidget<T extends Viewmodel> extends StatelessWidget {
-  const NofifiedWidget({super.key, required this.viewmodel});
+abstract class NotifiedWidget<T extends Viewmodel> extends StatelessWidget {
+  const NotifiedWidget({super.key, required this.viewmodel});
   final T viewmodel;
 
   void _bind(BuildContext context, T viewmodel) {

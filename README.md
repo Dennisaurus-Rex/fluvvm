@@ -111,7 +111,7 @@ enum MyIntent with FluvvmIntent {
 ### 3. Create a `Widget` that extends `NotifiedWidget`
 
 ```dart
-class MyWidget extends NofifiedWidget<MyViewmodel> {
+class MyWidget extends NotifiedWidget<MyViewmodel> {
   const MyWidget({super.key, required super.viewmodel});
 
   @override

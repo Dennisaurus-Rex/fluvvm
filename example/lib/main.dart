@@ -58,10 +58,10 @@ enum MyState with FluvvmState {
   content,
 }
 
-/// Example implementation of [NofifiedWidget].
+/// Example implementation of [NotifiedWidget].
 /// Interacts with [MyViewmodel] via [MyIntent].
 /// Rebuilds when [MyViewmodel] notifies about changes via [MyState].
-class MyHomePage extends NofifiedWidget<MyViewmodel> {
+class MyHomePage extends NotifiedWidget<MyViewmodel> {
   const MyHomePage({super.key, required super.viewmodel});
 
   @override

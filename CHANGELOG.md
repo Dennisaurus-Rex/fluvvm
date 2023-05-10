@@ -27,3 +27,7 @@ Updated README.md to reflect changes in version 2.0.0 that got lost in translati
 ## Version 2.0.2
 
 Made `NetworkRequestError` accessible by importing `fluvvm/fluvvm.dart`.
+
+## Version 2.0.3
+
+Corrected a stupid spelling mistake on a pretty important class... 🤫
