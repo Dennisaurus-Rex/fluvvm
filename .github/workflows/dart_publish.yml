@@ -14,12 +14,14 @@ jobs:
     environment: pub.dev
     steps:
       - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
+      # - uses: dart-lang/setup-dart@v1
+      # - uses: subosito/flutter-action@v2
+        # with:
+        #   channel: 'stable'
       - name: Update pubspec.yaml
         run: |
+          pip3 install gitpython 
+          pip3 install pyyaml
           python3 release.py
       # - name: Install dependencies
       #   run: flutter pub get
