@@ -14,31 +14,25 @@ jobs:
     environment: pub.dev
     steps:
       - uses: actions/checkout@v3
-      # - uses: dart-lang/setup-dart@v1
-      # - uses: subosito/flutter-action@v2
-        # with:
-        #   channel: 'stable'
       - name: Update pubspec.yaml
         run: |
           pip3 install gitpython 
           pip3 install pyyaml
           python3 release.py
-      # - name: Install dependencies
-      #   run: flutter pub get
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-      # - name: Analyze project source
-      #   run: dart analyze --fatal-infos
-      # - name: Dry run
-      #   run: dart pub publish --dry-run
-      # - name: Publish
-      #   run: dart pub publish --force
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          commit-message: release-${{ github.event.release.tag_name }}
-          title: release-${{ github.event.release.tag_name }}
-          body: Automatic PR for release-${{ github.event.release.tag_name }}
-          branch: release-${{ github.event.release.tag_name }}
-          base: master
+          channel: 'stable'
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze project source
+        run: dart analyze --fatal-infos
+      - name: Dry run
+        run: dart pub publish --dry-run
+      - name: Publish
+        run: dart pub publish --force
       

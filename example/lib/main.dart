@@ -5,6 +5,7 @@ void main() {
   runApp(const MyApp());
 }
 
+/// Root widget of the application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// Example implementation of a [Viewmodel]. Used in [MyHomePage].
 class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   MyViewmodel();
 
@@ -43,15 +45,22 @@ class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   }
 }
 
+/// Example implementation of [FluvvmIntent].
+/// Used by [MyHomePage] to notify [MyViewmodel] about user interactions.
 enum MyIntent with FluvvmIntent {
   increment,
 }
 
+/// Example implementation of [FluvvmState].
+/// Used in [MyViewmodel] to notify [MyHomePage] about changes.
 enum MyState with FluvvmState {
   loading,
   content,
 }
 
+/// Example implementation of [NofifiedWidget].
+/// Interacts with [MyViewmodel] via [MyIntent].
+/// Rebuilds when [MyViewmodel] notifies about changes via [MyState].
 class MyHomePage extends NofifiedWidget<MyViewmodel> {
   const MyHomePage({super.key, required super.viewmodel});
 
