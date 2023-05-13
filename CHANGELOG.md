@@ -31,3 +31,8 @@ Made `NetworkRequestError` accessible by importing `fluvvm/fluvvm.dart`.
 ## Version 2.0.3
 
 Corrected a stupid spelling mistake on a pretty important class... 🤫
+
+## Version 2.1.0
+
+* Added `fireAndMap` method to `NetworkRequest` class.
+* Updated to Dart 3

@@ -124,6 +124,44 @@ class NetworkRequest {
       rethrow;
     }
   }
+
+  /// Fire the request.
+  ///
+  /// Returns a [Future] that completes with [T]
+  /// if the request is successful.
+  ///
+  /// Hot Tip:
+  /// [mapper] can be used with classes annotaded with
+  /// [freezed](https://pub.dev/packages/freezed) or
+  /// [json_serializable](https://pub.dev/packages/json_serializable)
+  ///
+  /// Throws a [NetworkError] if the request fails.
+  /// Rethrows any exception from [http].
+  ///
+  /// Throws [NetworkRequestError.bodyOnGetRequest] if
+  /// [method] is [NetworkMethod.get] and [body] is not `null`.
+  ///
+  /// If you need to send headers with the request,
+  /// pass them as [headers].
+  ///
+  /// If you need to send a body with the request, pass it as [body].
+  /// The body will be encoded as JSON.
+  Future<T> fireAndMap<T>(
+    /// Map the response to [T].
+    T Function(Map<String, Object?>) mapper, {
+    /// The body of the request.
+    Object? body,
+
+    /// The headers of the request.
+    Map<String, String>? headers,
+  }) async {
+    try {
+      final json = await fire(body: body, headers: headers);
+      return mapper(json);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
 
 /// HTTP methods.

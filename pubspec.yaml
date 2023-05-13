@@ -6,7 +6,7 @@ version: 0.0.0
 repository: https://github.com/Dennisaurus-Rex/fluvvm
 issue_tracker: https://github.com/Dennisaurus-Rex/fluvvm/issues
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '^3.0.0'
 dependencies:
   flutter:
     sdk: flutter
