@@ -36,3 +36,8 @@ Corrected a stupid spelling mistake on a pretty important class... 🤫
 
 * Added `fireAndMap` method to `NetworkRequest` class.
 * Updated to Dart 3
+
+## Version 2.2.0
+
+* Added `initialState` property to `Viewmodel` class
+* Updated documentation with the new [Dart 3 Switch expressions](https://dart.dev/language/branches#switch-expressions)

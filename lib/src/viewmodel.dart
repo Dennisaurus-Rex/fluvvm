@@ -10,6 +10,11 @@ abstract class Viewmodel<S extends FluvvmState, I extends FluvvmIntent>
   /// Get the current state.
   S get state => _state;
 
+  /// The optional inital state of the viewmodel.
+  /// [_state] is set to [initialState] if `initialState != null`
+  /// when [bind] is called by the [NofifiedWidget].
+  S? get initialState;
+
   /// Set the current state.
   /// Do not set the state directly.
   /// Use [setState] instead.
@@ -32,6 +37,11 @@ abstract class Viewmodel<S extends FluvvmState, I extends FluvvmIntent>
   /// Stores the [BuildContext] for later use.
   void bind(BuildContext context) {
     _context = context;
+    final initialState = this.initialState;
+    if (initialState != null) {
+      _state = initialState;
+    }
+
     _isBound = true;
   }
 

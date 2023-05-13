@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
 class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   MyViewmodel();
 
+  @override
+  MyState get initialState => MyState.loading;
+
   String get content => _counter.toString();
   late int _counter;
 
@@ -70,9 +73,14 @@ class MyHomePage extends NotifiedWidget<MyViewmodel> {
       appBar: AppBar(
         title: const Text('MyWidget'),
       ),
-      body: Center(
-        child: Text(viewmodel.content),
-      ),
+      body: switch (viewmodel.state) {
+        MyState.loading => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        MyState.content => Center(
+            child: Text(viewmodel.content),
+          ),
+      },
       floatingActionButton: FloatingActionButton(
         onPressed: () => viewmodel.raiseIntent(MyIntent.increment),
         tooltip: 'Increment',

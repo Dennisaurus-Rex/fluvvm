@@ -4,6 +4,8 @@ import 'package:fluvvm/fluvvm.dart';
 import 'repository_example.dart';
 
 class ExampleViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
+  ExampleViewmodel();
+
   final _repository = ExampleRepository();
 
   List<Object> get content => _content;
@@ -55,6 +57,9 @@ class ExampleViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
   List<Object> _modifyDataBeforeServingToWidget(Map map) {
     return [];
   }
+
+  @override
+  ExampleState get initialState => ExampleState.loading;
 }
 
 enum ExampleState with FluvvmState {

@@ -7,11 +7,9 @@ class MyWidget extends NotifiedWidget<ExampleViewmodel> {
 
   @override
   Widget buildOnNotified(BuildContext context, ExampleViewmodel viewmodel) {
-    switch (viewmodel.state) {
-      case ExampleState.loading:
-        return const Center(child: CircularProgressIndicator());
-      case ExampleState.content:
-        return CustomScrollView(
+    return switch (viewmodel.state) {
+      ExampleState.loading => const Center(child: CircularProgressIndicator()),
+      ExampleState.content => CustomScrollView(
           slivers: [
             const SliverAppBar(
               title: Text('MyWidget'),
@@ -29,9 +27,8 @@ class MyWidget extends NotifiedWidget<ExampleViewmodel> {
               ),
             ),
           ],
-        );
-      case ExampleState.error:
-        return const Center(child: Text('Error'));
-    }
+        ),
+      ExampleState.error => const Center(child: Text('Error'))
+    };
   }
 }
