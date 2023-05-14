@@ -1,6 +1,6 @@
 import 'package:fluvvm/fluvvm.dart';
 
-class ExampleRepository {
+class MyRepository {
   String baseUrl = 'https://example.com';
   String path = '/api/v1/data';
 

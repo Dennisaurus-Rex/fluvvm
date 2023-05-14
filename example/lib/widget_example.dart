@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluvvm/fluvvm.dart';
 import 'viewmodel_example.dart';
 
-class MyWidget extends NotifiedWidget<ExampleViewmodel> {
+class MyWidget extends NotifiedWidget<MyViewmodel> {
   const MyWidget({super.key, required super.viewmodel});
 
   @override
-  Widget buildOnNotified(BuildContext context, ExampleViewmodel viewmodel) {
+  Widget buildOnNotified(BuildContext context, MyViewmodel viewmodel) {
     return switch (viewmodel.state) {
       ExampleState.loading => const Center(child: CircularProgressIndicator()),
       ExampleState.content => CustomScrollView(

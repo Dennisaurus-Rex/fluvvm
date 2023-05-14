@@ -41,24 +41,30 @@ class MyRepository {
 ### 2. Create a `ViewModel` with a `FluvvmState` and `FluvvmIntent`
 
 ```dart
-class MyViewmodel extends Viewmodel<MyState, MyIntent> {
-  final _repository = MyRepository();
+class MyViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
+  final _repository = ExampleRepository();
 
   List<Object> get content => _content;
   List<Object> _content = [];
 
   @override
-  void raiseIntent(intent, data) {
+  void onBound() {
+    setState(ExampleState.loading);
+    unawaited(_fetchData());
+  }
+
+  @override
+  void raiseIntent(ExampleIntent intent, {Object? data}) {
     switch (intent) {
-      case MyIntent.fetchData:
-        setState(MyState.loading);
-        _fetchData();
+      case ExampleIntent.fetchData:
+        setState(ExampleState.loading);
+        unawaited(_fetchData());
         break;
-      case MyIntent.storeData:
-        setState(MyState.loading);
-        _storeData(data);
+      case ExampleIntent.storeData:
+        setState(ExampleState.loading);
+        unawaited(_storeData(data));
         break;
-      case MyIntent.navigateToWidget:
+      case ExampleIntent.navigateToWidget:
         // Navigate to a new widget and pass data if needed.
         break;
     }
@@ -68,25 +74,25 @@ class MyViewmodel extends Viewmodel<MyState, MyIntent> {
     try {
       final map = await _repository.fetchRequest.fire();
       _content = _modifyDataBeforeServingToWidget(map);
-      setState(MyState.content);
+      setState(ExampleState.content);
     } catch (e) {
-      setState(MyState.error);
+      setState(ExampleState.error);
     }
   }
 
   Future<void> _storeData(Object? data) async {
     final thisData = data;
     if (thisData == null) {
-      setState(MyState.error);
+      setState(ExampleState.error);
       return;
     }
 
     try {
       final map = await _repository.store(thisData);
       _modifyDataBeforeServingToWidget(map);
-      setState(MyState.content);
+      setState(ExampleState.content);
     } catch (e) {
-      setState(MyState.error);
+      setState(ExampleState.error);
     }
   }
 
@@ -95,13 +101,13 @@ class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   }
 }
 
-enum MyState with FluvvmState {
+enum ExampleState implements FluvvmState {
   loading,
   content,
-  error,
+  error;
 }
 
-enum MyIntent with FluvvmIntent {
+enum ExampleIntent with FluvvmIntent {
   fetchData,
   storeData,
   navigateToWidget,
@@ -111,16 +117,14 @@ enum MyIntent with FluvvmIntent {
 ### 3. Create a `Widget` that extends `NotifiedWidget`
 
 ```dart
-class MyWidget extends NotifiedWidget<MyViewmodel> {
+class MyWidget extends NotifiedWidget<ExampleViewmodel> {
   const MyWidget({super.key, required super.viewmodel});
 
   @override
-  Widget buildOnNotified(BuildContext context, MyViewmodel viewmodel) {
-    switch (viewmodel.state) {
-      case MyState.loading:
-        return const Center(child: CircularProgressIndicator());
-      case MyState.content:
-        return CustomScrollView(
+  Widget buildOnNotified(BuildContext context, ExampleViewmodel viewmodel) {
+    return switch (viewmodel.state) {
+      ExampleState.loading => const Center(child: CircularProgressIndicator()),
+      ExampleState.content => CustomScrollView(
           slivers: [
             const SliverAppBar(
               title: Text('MyWidget'),
@@ -130,18 +134,17 @@ class MyWidget extends NotifiedWidget<MyViewmodel> {
                 (context, index) => ListTile(
                   title: Text(viewmodel.content[index].toString()),
                   onTap: () => viewmodel.raiseIntent(
-                    MyIntent.storeData,
-                    {'newData': index},
+                    ExampleIntent.storeData,
+                    data: {'newData': index},
                   ),
                 ),
                 childCount: viewmodel.content.length,
               ),
             ),
           ],
-        );
-      case MyState.error:
-        return const Center(child: Text('Error'));
-    }
+        ),
+      ExampleState.error => const Center(child: Text('Error'))
+    };
   }
 }
 ```
@@ -151,6 +154,7 @@ class MyWidget extends NotifiedWidget<MyViewmodel> {
 ### Get
 
 ```dart
+/// Simple get request.
 Future<Map<String, dynamic>> get(
   String id,
   Map<String, String>? headers,
@@ -162,6 +166,20 @@ Future<Map<String, dynamic>> get(
       query: {'id': id},
     );
     return await request.fire(headers: headers);
+  } catch (e) {
+    rethrow;
+  }
+}
+
+/// Simple get with map request.
+Future<MyResponseModel> getWithMap(String id) async {
+  try {
+    final request = NetworkRequest(
+      baseUrl: 'https://example.com',
+      path: '/api/v1/data',
+      query: {'id': id},
+    );
+    return await request.fireAndMap(MyResponseModel.fromJson);
   } catch (e) {
     rethrow;
   }

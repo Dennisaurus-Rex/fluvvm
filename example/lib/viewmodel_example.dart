@@ -1,15 +1,18 @@
 import 'dart:async';
-
 import 'package:fluvvm/fluvvm.dart';
 import 'repository_example.dart';
 
-class ExampleViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
-  ExampleViewmodel();
-
-  final _repository = ExampleRepository();
+class MyViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
+  final _repository = MyRepository();
 
   List<Object> get content => _content;
   List<Object> _content = [];
+
+  @override
+  void onBound() {
+    setState(ExampleState.loading);
+    unawaited(_fetchData());
+  }
 
   @override
   void raiseIntent(ExampleIntent intent, {Object? data}) {
@@ -57,15 +60,12 @@ class ExampleViewmodel extends Viewmodel<ExampleState, ExampleIntent> {
   List<Object> _modifyDataBeforeServingToWidget(Map map) {
     return [];
   }
-
-  @override
-  ExampleState get initialState => ExampleState.loading;
 }
 
-enum ExampleState with FluvvmState {
+enum ExampleState implements FluvvmState {
   loading,
   content,
-  error,
+  error;
 }
 
 enum ExampleIntent with FluvvmIntent {

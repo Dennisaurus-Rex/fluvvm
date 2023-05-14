@@ -41,3 +41,9 @@ Corrected a stupid spelling mistake on a pretty important class... 🤫
 
 * Added `initialState` property to `Viewmodel` class
 * Updated documentation with the new [Dart 3 Switch expressions](https://dart.dev/language/branches#switch-expressions)
+
+## Version 2.2.1
+
+* Removed `initialState` property from `Viewmodel` class
+* Added `onBound` method to `Viewmodel` class
+* Added `onUnbind` method to `Viewmodel` class

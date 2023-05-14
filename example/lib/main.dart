@@ -25,10 +25,10 @@ class MyViewmodel extends Viewmodel<MyState, MyIntent> {
   MyViewmodel();
 
   @override
-  MyState get initialState => MyState.loading;
+  void onBound() {}
 
   String get content => _counter.toString();
-  late int _counter;
+  int _counter = 0;
 
   @override
   void bind(BuildContext context) {
@@ -57,6 +57,7 @@ enum MyIntent with FluvvmIntent {
 /// Example implementation of [FluvvmState].
 /// Used in [MyViewmodel] to notify [MyHomePage] about changes.
 enum MyState with FluvvmState {
+  initial,
   loading,
   content,
 }
@@ -77,7 +78,7 @@ class MyHomePage extends NotifiedWidget<MyViewmodel> {
         MyState.loading => const Center(
             child: CircularProgressIndicator(),
           ),
-        MyState.content => Center(
+        MyState.content || MyState.initial => Center(
             child: Text(viewmodel.content),
           ),
       },

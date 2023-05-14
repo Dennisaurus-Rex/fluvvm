@@ -6,6 +6,11 @@ import 'package:provider/provider.dart';
 /// A widget that is notified when the viewmodel changes.
 abstract class NotifiedWidget<T extends Viewmodel> extends StatelessWidget {
   const NotifiedWidget({super.key, required this.viewmodel});
+
+  /// The viewmodel that is bound to this widget.
+  ///
+  /// State changes of this viewmodel will trigger a rebuild of this widget.
+  /// And the [buildOnNotified] method will be called.
   final T viewmodel;
 
   void _bind(BuildContext context, T viewmodel) {
