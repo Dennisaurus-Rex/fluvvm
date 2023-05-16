@@ -47,3 +47,7 @@ Corrected a stupid spelling mistake on a pretty important class... 🤫
 * Removed `initialState` property from `Viewmodel` class
 * Added `onBound` method to `Viewmodel` class
 * Added `onUnbind` method to `Viewmodel` class
+
+## Version 2.3.0
+
+* Added `keepAlive` to `NotifiedWidget` class
