@@ -51,3 +51,7 @@ Corrected a stupid spelling mistake on a pretty important class... 🤫
 ## Version 2.3.0
 
 * Added `keepAlive` to `NotifiedWidget` class
+
+## Version 2.3.1
+
+* Updated dependencies
