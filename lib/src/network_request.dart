@@ -175,7 +175,13 @@ enum NetworkError { badRequest, unauthorized, unkown }
 
 /// Exception thrown when a network request fails.
 class NetworkException implements Exception {
-  const NetworkException(this.error, this.body, this.code);
+  const NetworkException(
+    this.error,
+    this.body,
+    this.code,
+    this.request,
+  );
+
   factory NetworkException.fromResponse(http.Response response) {
     final code = response.statusCode;
     if (code._isInRange(400, 499)) {
@@ -183,18 +189,21 @@ class NetworkException implements Exception {
         NetworkError.badRequest,
         response.body,
         code,
+        response.request,
       );
     } else if (code._isInRange(500, 599)) {
       return NetworkException(
         NetworkError.unauthorized,
         response.body,
         code,
+        response.request,
       );
     } else {
       return NetworkException(
         NetworkError.unkown,
         response.body,
         code,
+        response.request,
       );
     }
   }
@@ -208,10 +217,12 @@ class NetworkException implements Exception {
   /// The response body.
   final String body;
 
+  /// The request that caused the exception.
+  final http.BaseRequest? request;
+
   @override
-  String toString() {
-    return 'NetworkException: $error\nCode: $code\nBody: $body';
-  }
+  String toString() =>
+      'NetworkException: $error\nCode: $code\nBody: $body\nRequest: $request';
 }
 
 /// Thrown when [NetworkRequest] usage is incorrect.
