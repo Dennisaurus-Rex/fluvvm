@@ -55,3 +55,7 @@ Corrected a stupid spelling mistake on a pretty important class... 🤫
 ## Version 2.3.1
 
 * Updated dependencies
+
+## Version 2.4.0
+
+* Added `NetworkException` class for more detailed error handling

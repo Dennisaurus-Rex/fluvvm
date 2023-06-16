@@ -113,12 +113,8 @@ class NetworkRequest {
         final Map map = jsonDecode(response.body);
         final Map<String, Object?> json = Map.from(map);
         return json;
-      } else if (code._isInRange(400, 499)) {
-        throw NetworkError.badRequest;
-      } else if (code._isInRange(500, 599)) {
-        throw NetworkError.unauthorized;
       } else {
-        throw NetworkError.unkown;
+        throw NetworkException.fromResponse(response);
       }
     } catch (e) {
       rethrow;
@@ -175,7 +171,48 @@ enum NetworkMethod { get, post, put, delete }
 /// Response codes: 400 - 499 = [NetworkError.badRequest]
 /// Response codes: 500 - 599 = [NetworkError.unauthorized]
 /// Other response codes = [NetworkError.unkown]
-enum NetworkError implements Exception { badRequest, unauthorized, unkown }
+enum NetworkError { badRequest, unauthorized, unkown }
+
+/// Exception thrown when a network request fails.
+class NetworkException implements Exception {
+  const NetworkException(this.error, this.body, this.code);
+  factory NetworkException.fromResponse(http.Response response) {
+    final code = response.statusCode;
+    if (code._isInRange(400, 499)) {
+      return NetworkException(
+        NetworkError.badRequest,
+        response.body,
+        code,
+      );
+    } else if (code._isInRange(500, 599)) {
+      return NetworkException(
+        NetworkError.unauthorized,
+        response.body,
+        code,
+      );
+    } else {
+      return NetworkException(
+        NetworkError.unkown,
+        response.body,
+        code,
+      );
+    }
+  }
+
+  /// The error that caused the exception.
+  final NetworkError error;
+
+  /// The response code.
+  final int code;
+
+  /// The response body.
+  final String body;
+
+  @override
+  String toString() {
+    return 'NetworkException: $error\nCode: $code\nBody: $body';
+  }
+}
 
 /// Thrown when [NetworkRequest] usage is incorrect.
 enum NetworkRequestError implements Exception {
