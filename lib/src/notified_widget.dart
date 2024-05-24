@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:fluvvm/src/viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +24,8 @@ abstract class NotifiedWidget<T extends Viewmodel> extends StatelessWidget {
   /// Default is `keepAlive = false`
   final bool keepAlive;
 
-  void _bind(BuildContext context, T viewmodel) {
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+  void _bind(T viewmodel, BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       viewmodel.bind(context);
     });
   }
@@ -50,11 +49,12 @@ abstract class NotifiedWidget<T extends Viewmodel> extends StatelessWidget {
 
   Widget _buildKeepAlive(BuildContext context) =>
       ChangeNotifierProvider<T>.value(
+        key: super.key,
         value: viewmodel,
         builder: (context, child) => Consumer<T>(
           builder: (context, viewmodel, child) {
             if (!viewmodel.isBound) {
-              _bind(context, viewmodel);
+              _bind(viewmodel, context);
               return const SizedBox.shrink();
             }
             return buildOnNotified(context, viewmodel);
@@ -63,11 +63,12 @@ abstract class NotifiedWidget<T extends Viewmodel> extends StatelessWidget {
       );
 
   Widget _build(BuildContext context) => ChangeNotifierProvider<T>(
+        key: super.key,
         create: (context) => viewmodel,
         builder: (context, child) => Consumer<T>(
           builder: (context, viewmodel, child) {
             if (!viewmodel.isBound) {
-              _bind(context, viewmodel);
+              _bind(viewmodel, context);
               return const SizedBox.shrink();
             }
             return buildOnNotified(context, viewmodel);
